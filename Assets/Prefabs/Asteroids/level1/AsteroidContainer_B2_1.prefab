@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 64116374353798528}
   - component: {fileID: 114024122606103308}
   - component: {fileID: 54142574538671232}
-  - component: {fileID: 114396260811876502}
+  - component: {fileID: 114653330170648370}
   m_Layer: 12
   m_Name: AsteroidContainer_B2_1
   m_TagString: Asteroids
@@ -127,7 +127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7635629501044184084d97f5ac5dae43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 2
+  hp: 30
   initialTorque: 0
   initialForce: 0
   size: 0.5
@@ -137,7 +137,7 @@ MonoBehaviour:
   asteroidManager: {fileID: 0}
   explosionFX: {fileID: 1346056089373856, guid: 38214b9ba6777ef4899c3deeee0706d1,
     type: 2}
---- !u!114 &114396260811876502
+--- !u!114 &114653330170648370
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -145,6 +145,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 1342965763521010}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e748bde3f7dca5f4c8d222522bb521ae, type: 3}
+  m_Script: {fileID: 11500000, guid: c6e9391c58eb40443ac111182e58f808, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  asteroidScript: {fileID: 0}
+  timeToKill: 10

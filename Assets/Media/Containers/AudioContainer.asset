@@ -1,0 +1,79 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35633cea662377549a8c886046712cc4, type: 3}
+  m_Name: AudioContainer
+  m_EditorClassIdentifier: 
+  sc_MissionStart:
+  - {fileID: 8300000, guid: 5c378e63983197a4197900faf98c69bf, type: 3}
+  sc_MissionEnd:
+  - {fileID: 8300000, guid: be6d1a32a768ac74d8337d2affd37704, type: 3}
+  sc_MissionProgress_25:
+  - {fileID: 8300000, guid: ac1924c103faf574a95df568f9b96e20, type: 3}
+  sc_MissionProgress_50:
+  - {fileID: 8300000, guid: f33e22fd59902b84fb4b1616836627a1, type: 3}
+  sc_MissionProgress_75:
+  - {fileID: 8300000, guid: 4da48d04f9c542442a8d6efe6e626c59, type: 3}
+  sc_GiveMissionPointer:
+  - {fileID: 8300000, guid: f0ebfedc5d77b8c439cb1489bc5f6db5, type: 3}
+  l_FriendlyFire:
+  - {fileID: 8300000, guid: e83cbe8a699f1a548ba09a4e238fce9f, type: 3}
+  - {fileID: 8300000, guid: e8d622f95fb24474ba1a468afc56674c, type: 3}
+  - {fileID: 8300000, guid: bae2fb64cc3d6d64a8bf296082ec83d5, type: 3}
+  l_EnemyAttack:
+  - {fileID: 8300000, guid: bd1144daba9f6fd4eb8176c8e65c920c, type: 3}
+  - {fileID: 8300000, guid: 4a235b3a03e1248408bd9f8a54d341cd, type: 3}
+  - {fileID: 8300000, guid: 4c55c983f6d05114b89d242c9c7c194d, type: 3}
+  l_Asteroid:
+  - {fileID: 8300000, guid: 7991e6bc2e4d6c6478e497438a1f84ed, type: 3}
+  - {fileID: 8300000, guid: fa8766fc379208d4cb60c44dd4a9ecde, type: 3}
+  - {fileID: 8300000, guid: c0c5e7df3cc4f314b8a86a3dd8c26bc9, type: 3}
+  l_EnemyKilled: []
+  l_Death:
+  - {fileID: 8300000, guid: 71cd4593c22e4cb45aaf18b4532d3756, type: 3}
+  - {fileID: 8300000, guid: 0a40a7b5819d2df43901b70059b410e6, type: 3}
+  - {fileID: 8300000, guid: 76e187c43808c044598711c2d697ff5f, type: 3}
+  q_FriendlyFire:
+  - {fileID: 8300000, guid: a2bfa8aa03dfcb9429f5b478b7c8f865, type: 3}
+  - {fileID: 8300000, guid: b8c039fb0689bdd4a8e678427e25ea9b, type: 3}
+  - {fileID: 8300000, guid: dbb3063f4189d064785ddf96c579ce21, type: 3}
+  - {fileID: 8300000, guid: f7d0e81923fb03d42b6c9b6e7432aa9c, type: 3}
+  q_EnemyAttack:
+  - {fileID: 8300000, guid: f59974494847dac478e1666916e8e851, type: 3}
+  q_Asteroid:
+  - {fileID: 8300000, guid: 0799d6f078211c54c8e8b2d919b69123, type: 3}
+  - {fileID: 8300000, guid: df1eb7831bd892e4da89a6b803c7519c, type: 3}
+  q_EnemyKilled:
+  - {fileID: 8300000, guid: e11182ef97908db4abda1514bd36920a, type: 3}
+  - {fileID: 8300000, guid: e957e4ffc905f4142bd8b59cdaeb95d3, type: 3}
+  q_Death:
+  - {fileID: 8300000, guid: 572e6bc819c81554bb0be95b425b9366, type: 3}
+  - {fileID: 8300000, guid: cf43288567754ac479e1552ed361d8f6, type: 3}
+  d_FriendlyFire:
+  - {fileID: 8300000, guid: 4c06a087136a0fe4697ea2636a2be3c8, type: 3}
+  - {fileID: 8300000, guid: 2db99e1958bc1e141bfea76c35c179e7, type: 3}
+  - {fileID: 8300000, guid: ba8312cd14807364c9fee951162ec9ef, type: 3}
+  - {fileID: 8300000, guid: 455fcee47f88537488e98d84be013ab7, type: 3}
+  d_EnemyAttack:
+  - {fileID: 8300000, guid: 226718da8e124624b8ec2194ae7a392c, type: 3}
+  - {fileID: 8300000, guid: 1e0bef7155810764fb17b042ff4d1659, type: 3}
+  - {fileID: 8300000, guid: b25a48183a87d1d41914f9629bcf5be5, type: 3}
+  d_Asteroid:
+  - {fileID: 8300000, guid: b3178c63c3d938e4f811055372721735, type: 3}
+  - {fileID: 8300000, guid: 0625523184058e84b8b9b0e1eb3116b2, type: 3}
+  - {fileID: 8300000, guid: bf12092bc1f6c8141b136e4270f5db0a, type: 3}
+  d_EnemyKilled:
+  - {fileID: 8300000, guid: 3960e86a5952cc74a9e59c68f91342df, type: 3}
+  - {fileID: 8300000, guid: ecefb13a917f36946b588925326e933f, type: 3}
+  - {fileID: 8300000, guid: 84ebeb64a7a20cf49abd672bba360be0, type: 3}
+  d_Death:
+  - {fileID: 8300000, guid: 16ccbc3112d3b4a408cb14d654c1d858, type: 3}
+  - {fileID: 8300000, guid: d031f90831f32ea439de7760d773aea5, type: 3}
+  - {fileID: 8300000, guid: 0905f5ba0ce1b784e9252948e018b0ed, type: 3}

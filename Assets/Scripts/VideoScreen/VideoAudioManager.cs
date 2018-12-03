@@ -5,76 +5,94 @@ using UnityEngine.Audio;
 using UnityEngine.Video;
 
 public class VideoAudioManager : AudioManager {
+	[Header("Dependencies")]
 	public AudioSource audioSource;
 	public VideoPlayer videoPlayer;
 	public AudioClip noise;
-	//public VideoClip noiseVideo;
 	public GameObject objectivePointer;
-
-	[Space(5f)]
-	[Header("Mission clips")]
-	public AudioClip[] missionStart;
-	public AudioClip[] missionEnd;
-	public AudioClip[] missionProgress_25;
-	public AudioClip[] missionProgress_50;
-	public AudioClip[] missionProgress_75;
-	public AudioClip[] giveObjectivePointer;
+	public VideoContainer videoContainer;
+	public AudioContainer audioContainer;
 
 	private bool played_75;
 	private bool played_50;
 	private bool played_25;
 	private bool played_End;
 
-	[Space(5f)]
-	[Header("Mission clips")]
-	public VideoClip spaceCommander;
+	private List<MessageClip> _messageQueue = new List<MessageClip>();
+	private bool _isPlaying = false;
+
+	public void PlayVideoAudio (AudioClip[] ac, VideoClip vc) {
+		if (!_isPlaying) {
+			StartCoroutine(PlayClipWithNoise(ac, vc));
+		} else {
+			MessageClip messageClip = new MessageClip();
+			messageClip.ac = ac;
+			messageClip.vc = vc;
+			_messageQueue.Add(messageClip);
+		}
+	}
 
 	public void MissionStart () {
-		StartCoroutine(PlayClipWithNoise(missionStart));
+		PlayVideoAudio(audioContainer.sc_MissionStart, videoContainer.spaceCommander);
 	}
 	public void Mission_25 () {
 		if (!played_25) {
-			StartCoroutine(PlayClipWithNoise(missionProgress_25));
+			PlayVideoAudio(audioContainer.sc_MissionProgress_25, videoContainer.spaceCommander);
 			played_25 = true;
 		}
 	}
 	public void Mission_50 () {
 		if (!played_50) {
-			StartCoroutine(PlayClipWithNoise(missionProgress_50));
+			PlayVideoAudio(audioContainer.sc_MissionProgress_50, videoContainer.spaceCommander);
 			played_50 = true;
 		}
 	}
 	public void Mission_75 () {
 		if (!played_75) {
-			StartCoroutine(PlayClipWithNoise(missionProgress_75));
+			PlayVideoAudio(audioContainer.sc_MissionProgress_75, videoContainer.spaceCommander);
 			played_75 = true;
 		}
 	}
 	public void MissionEnd () {
 		if (!played_End) {
-			StartCoroutine(PlayClipWithNoise(missionEnd));
+			PlayVideoAudio(audioContainer.sc_MissionEnd, videoContainer.spaceCommander);
 			played_End = true;
 		}
 	}
 	public void ActivatePointer () {
-		StartCoroutine(PlayClipWithNoise(giveObjectivePointer));
+		PlayVideoAudio(audioContainer.sc_GiveMissionPointer, videoContainer.spaceCommander);
 		objectivePointer.SetActive(true);
 	}
 
-	IEnumerator PlayClipWithNoise (AudioClip[] ac) {
-		//videoPlayer.Stop();
-		audioSource.Stop();
+	IEnumerator PlayClipWithNoise (AudioClip[] ac, VideoClip vc) {
+		_isPlaying =  true;
 
-		PlayClipAlways(audioSource, noise);
-		videoPlayer.clip = spaceCommander;
-		videoPlayer.Play();
+		if (ac != null) {
+			audioSource.Stop();
+			PlayClipAlways(audioSource, noise);
+		}
+
+		if (vc != null) {
+			videoPlayer.clip = vc;
+			videoPlayer.Play();
+		}
 		yield return new WaitForSeconds(audioSource.clip.length);
-		PlayClipAlways(audioSource, ac);
+
+		if (ac != null) PlayClipAlways(audioSource, ac);
 		yield return new WaitForSeconds(audioSource.clip.length);
-		videoPlayer.frame = 0;
-		PlayClipAlways(audioSource, noise);
+
+		if (vc != null) videoPlayer.frame = 0;
+		if (ac != null) PlayClipAlways(audioSource, noise);
 		yield return new WaitForSeconds(audioSource.clip.length);
-		videoPlayer.Stop();
+
+		if (vc != null) videoPlayer.Stop();
+
+		if (_messageQueue.Count > 0) {
+			StartCoroutine(PlayClipWithNoise(_messageQueue[0].ac, _messageQueue[0].vc));
+			_messageQueue.RemoveAt(0);
+		} else {
+			_isPlaying = false;
+		}
 	}
 
 	void Start () {

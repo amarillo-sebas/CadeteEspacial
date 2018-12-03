@@ -171,7 +171,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 0.75
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -222,12 +222,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd4be318222f64948bac7019d63fbe74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 30
-  lifeSpan: 5
-  collisionDistance: 2
+  damage: 0
   shotLayers:
     serializedVersion: 2
     m_Bits: 4097
+  entityID: {fileID: 0}
+  speed: 30
+  lifeSpan: 5
+  collisionDistance: 2
   explosionForce: 30
   hitFX: {fileID: 1948741798903404, guid: 6cf619b88efe2f942914d8228d74520f, type: 2}
 --- !u!114 &114978740885437444

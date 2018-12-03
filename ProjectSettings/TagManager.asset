@@ -8,6 +8,7 @@ TagManager:
   - Asteroids
   - LevelBorder
   - Base
+  - NPCShip
   layers:
   - Default
   - TransparentFX
@@ -22,8 +23,8 @@ TagManager:
   - PlayerShip
   - Shot
   - Asteroids
-  - 
-  - 
+  - NPCShip
+  - NPCCollider
   - 
   - 
   - 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Asteroid : MonoBehaviour {
-	public int hp = 3;
+	public int hp = 30;
 	public float initialTorque;
 	public float initialForce;
 
@@ -16,6 +16,8 @@ public class Asteroid : MonoBehaviour {
 	public AsteroidManager asteroidManager;
 
 	public GameObject explosionFX;
+
+	private bool _alreadyExploded = false;
 
 	void Start () {
 		asteroidManager.AddThisAsteroid(this);
@@ -32,15 +34,16 @@ public class Asteroid : MonoBehaviour {
 		GetComponent<Rigidbody>().AddForce(Random.insideUnitSphere.normalized * force);
 	}
 	
-	public void Damage (float force) {
-		hp--;
-		if (hp == 0) {
-			Explode(force);
+	public void Damage (float force, int damage, EntityID entityID) {
+		hp -= damage;
+		if (hp <= 0 && !_alreadyExploded) {
+			Explode(force, entityID);
 		}
 	}
 
-	public void Explode (float force) {
+	public void Explode (float force, EntityID entityID) {
 		if (asteroidPieces.Length > 0) {
+			_alreadyExploded = true;
 			for (int i = 0; i < asteroidPieces.Length; i++) {
 				GameObject go = Instantiate(asteroidPieces[i], transform.position, transform.rotation);
 				go.transform.localScale = transform.localScale;
@@ -55,6 +58,9 @@ public class Asteroid : MonoBehaviour {
 				a.asteroidManager = asteroidManager;
 			}
 		}
+
+		entityID.CommunicateAsteroidDestruction();
+
 		asteroidManager.RemoveThisAsteroid(this);
 		GameObject fx = Instantiate(explosionFX, transform.position, Quaternion.identity);
 		fx.GetComponent<FX_Size>().SetSize(transform.localScale.x, size);

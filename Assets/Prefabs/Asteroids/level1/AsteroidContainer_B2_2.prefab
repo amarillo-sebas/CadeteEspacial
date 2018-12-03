@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 64962236903277306}
   - component: {fileID: 114825293681382134}
   - component: {fileID: 54520964283221390}
-  - component: {fileID: 114656142129938054}
+  - component: {fileID: 114032363778177742}
   m_Layer: 12
   m_Name: AsteroidContainer_B2_2
   m_TagString: Asteroids
@@ -116,7 +116,7 @@ MeshCollider:
   m_CookingOptions: 14
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300010, guid: 55b865b27f89d6243bb69a2a8cfaa770, type: 3}
---- !u!114 &114656142129938054
+--- !u!114 &114032363778177742
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -124,9 +124,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1694172429485980}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e748bde3f7dca5f4c8d222522bb521ae, type: 3}
+  m_Script: {fileID: 11500000, guid: c6e9391c58eb40443ac111182e58f808, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  asteroidScript: {fileID: 0}
+  timeToKill: 10
 --- !u!114 &114825293681382134
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -138,7 +140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7635629501044184084d97f5ac5dae43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 2
+  hp: 30
   initialTorque: 0
   initialForce: 0
   size: 0.5

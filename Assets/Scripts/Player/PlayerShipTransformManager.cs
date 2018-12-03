@@ -8,6 +8,7 @@ public class PlayerShipTransformManager : MonoBehaviour {
 	public Rigidbody rb;
 	private AsteroidManager asteroidManager;
 	public MessageDisplayer messages;
+	public EntityID entityID;
 
 	[Space(5f)]
 	[Header("Movement")]
@@ -24,6 +25,8 @@ public class PlayerShipTransformManager : MonoBehaviour {
 	private float _fireTimeCounter = 0f;
 	public Transform[] shotEmitters;
 	public GameObject shotPrefab;
+	public int damage;
+	public LayerMask shotLayers;
 	
 	void Start () {
 		asteroidManager = FindObjectOfType(typeof(AsteroidManager)) as AsteroidManager;
@@ -65,6 +68,10 @@ public class PlayerShipTransformManager : MonoBehaviour {
 	void Shoot () {
 		for (int i = 0; i < shotEmitters.Length; i++) {
 			GameObject shot = Instantiate(shotPrefab, shotEmitters[i].position, shotEmitters[i].rotation);
+			Shot shotScript = shot.GetComponent<Shot>();
+			shotScript.damage = damage;
+			shotScript.shotLayers = shotLayers;
+			shotScript.entityID = entityID;
 		}
 	}
 
