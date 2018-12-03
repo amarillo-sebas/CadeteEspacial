@@ -9,11 +9,11 @@ public class Health : MonoBehaviour {
 	public virtual void Damage (int d, EntityID entityID) {
 		hp -= d;
 		if (hp <= 0) {
-			Die();
+			Die(entityID);
 		}
 	}
 
-	public virtual void Die () {
+	public virtual void Die (EntityID entityID) {
 		Instantiate(deathFX, transform.position, transform.rotation);
 		Destroy(gameObject);
 	}

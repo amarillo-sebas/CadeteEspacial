@@ -25,6 +25,10 @@ public class BasicShot : Shot {
 			if (hit.transform.tag == "Asteroids") {
 				hit.transform.GetComponent<Asteroid>().Damage(explosionForce, damage, entityID);
 				if (rb) rb.AddForce(transform.forward * explosionForce * 2f);
+			} else if (hit.transform.tag == "Player") {
+				Health hp = hit.transform.GetComponent<Health>();
+				if (hp) hp.Damage(damage, entityID);
+				if (rb) rb.AddForce(transform.forward * explosionForce * 0.5f);
 			} else {
 				Health hp = hit.transform.GetComponent<Health>();
 				if (hp) hp.Damage(damage, entityID);

@@ -7,7 +7,7 @@ using UnityEngine.Video;
 public class NPCShipPlayerCommunicator : MonoBehaviour {
 	[Header("Dependencies")]
 	public VideoAudioManager playerCommunication;
-	public NPCShipTransformManager shipManager;
+	public NPCManager npcManager;
 	public VideoContainer videoContainer;
 	public AudioContainer audioContainer;
 
@@ -17,9 +17,14 @@ public class NPCShipPlayerCommunicator : MonoBehaviour {
 	public float speechCooldown = 5f;
 	private bool _onCooldown;
 
-	IEnumerator Start () {
-		yield return new WaitForSeconds(0.6f);
-		playerCommunication = shipManager.player.GetComponent<VideoAudioManager>();
+	void Start () {
+		StartCoroutine(WaitForPlayer());
+	}
+
+	IEnumerator WaitForPlayer () {
+		yield return null;
+		if (npcManager) playerCommunication = npcManager.player.GetComponent<VideoAudioManager>();
+		else StartCoroutine(WaitForPlayer());
 	}
 
 	public void FriendlyFire () {
@@ -88,17 +93,57 @@ public class NPCShipPlayerCommunicator : MonoBehaviour {
 		CommunicateWithPlayer(ac, vc);
 	}
 
-	public void NPCFire () {
+	public void EnemyKilled () {
+		AudioClip[] ac = null;
+		VideoClip vc = null;
 
+		switch (entityID.entityType) {
+			case EntityType.Lopez:
+				ac = audioContainer.l_EnemyKilled;
+				vc = videoContainer.lopez;
+			break;
+			case EntityType.Quispe:
+				ac = audioContainer.q_EnemyKilled;
+				vc = videoContainer.quispe;
+			break;
+			case EntityType.Durflors:
+				ac = audioContainer.d_EnemyKilled;
+				vc = videoContainer.durflors;
+			break;
+		}
+
+		CommunicateWithPlayer(ac, vc);
 	}
 
 	public void EnemyFire () {
+		AudioClip[] ac = null;
+		VideoClip vc = null;
 
+		switch (entityID.entityType) {
+			case EntityType.Lopez:
+				ac = audioContainer.l_EnemyAttack;
+				vc = videoContainer.lopez;
+			break;
+			case EntityType.Quispe:
+				ac = audioContainer.q_EnemyAttack;
+				vc = videoContainer.quispe;
+			break;
+			case EntityType.Durflors:
+				ac = audioContainer.d_EnemyAttack;
+				vc = videoContainer.durflors;
+			break;
+		}
+
+		CommunicateWithPlayer(ac, vc);
+	}
+
+	public void NPCFire () {
+		
 	}
 
 	public void CommunicateWithPlayer (AudioClip[] ac, VideoClip vc, bool playAlways = false) {
 		if (!_onCooldown || playAlways) {
-			playerCommunication.PlayVideoAudio(ac, vc);
+			if (playerCommunication) playerCommunication.PlayVideoAudio(ac, vc);
 			StartCoroutine(Cooldown());
 		}
 	}

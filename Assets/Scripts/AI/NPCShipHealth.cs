@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class NPCShipHealth : Health {
 	public NPCShipPlayerCommunicator playerCommunicator;
+	public NPCShipTransformManager transformManager;
+	public NPCManager npcManager;
 
 	public override void Damage (int d, EntityID entityID) {
 		base.Damage(d, entityID);
@@ -13,13 +15,16 @@ public class NPCShipHealth : Health {
 			break;
 			case EntityType.NPCShip: playerCommunicator.NPCFire();
 			break;
-			case EntityType.EnemyShip: playerCommunicator.EnemyFire();
+			case EntityType.EnemyShip:
+				playerCommunicator.EnemyFire();
+				transformManager.PickNewTarget();
 			break;
 		}
 	}
 
-	public override void Die () {
+	public override void Die (EntityID entityID) {
 		playerCommunicator.Die();
-		base.Die();
+		npcManager.RemoveThisNPC(transformManager);
+		base.Die(entityID);
 	}
 }

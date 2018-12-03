@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NPCShipTransformManager : MonoBehaviour {
+public class EnemyShipTransformManager : MonoBehaviour {
 	[Header("Dependencies")]
 	public AsteroidManager asteroidManager;
 	public NPCManager npcManager;
 	public EntityID entityID;
-	public NPCShipHealth hp;
-	public NPCShipPlayerCommunicator playerCommunicator;
+	public EnemyShipHealth hp;
 
 	[Space(5f)]
 	[Header("Movement")]
@@ -66,6 +65,7 @@ public class NPCShipTransformManager : MonoBehaviour {
 			Vector3 targetDir = _destinationVector - transform.position;
 			Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, step, 0f);
 			transform.rotation = Quaternion.LookRotation(newDir);
+			//Debug.Log(Vector3.Distance(transform.position, _destinationVector));
 
 			if (Vector3.Distance(transform.position, _destinationVector) < 3f) {
 				_hasDestinationVector = false;
@@ -93,27 +93,15 @@ public class NPCShipTransformManager : MonoBehaviour {
 		}
 	}
 
-	//private bool _previousTargetWasEnemy = false;
-	public void PickNewTarget () {
-		/*if (_previousTargetWasEnemy) {
-			playerCommunicator.EnemyKilled();
-		}*/
-
-		if (npcManager.enemyShips.Count > 0) {
-			int e = Random.Range(0, npcManager.enemyShips.Count);
-			target = npcManager.enemyShips[e].transform;
-		} else {
-			if (asteroidManager.asteroids.Count > 0) {
-				int a = Random.Range(0, asteroidManager.asteroids.Count);
-				target = asteroidManager.asteroids[a].transform;
-			}
-			else {
-				target = npcManager.player;
-			}
+	public void PickNewTarget (bool pickPlayer = false) {
+		if (npcManager.npcShips.Count > 0 && !pickPlayer) {
+			int t = Random.Range(-1, npcManager.npcShips.Count);
+			if (t == -1) target = npcManager.player;
+			else target = npcManager.npcShips[t].transform;
 		}
-
-		/*if (target.GetComponent<EnemyShipHealth>()) _previousTargetWasEnemy = true;
-		else _previousTargetWasEnemy = false;*/
+		else {
+			target = npcManager.player;
+		}
 	}
 
 	void Shoot () {
