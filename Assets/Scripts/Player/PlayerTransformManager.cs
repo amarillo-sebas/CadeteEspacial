@@ -5,11 +5,14 @@ using UnityEngine;
 public class PlayerTransformManager : MonoBehaviour {
 	public Transform shipTransform;
 	
-	void Start () {
-		//Screen.SetResolution(1280, 720, true);
+	public void GetInShip (Transform ship) {
+		shipTransform = ship;
+	}
+	public void LeaveShip () {
+		shipTransform = null;
 	}
 
 	void Update () {
-		transform.position = shipTransform.position;
+		if (shipTransform) transform.position = shipTransform.position;
 	}
 }

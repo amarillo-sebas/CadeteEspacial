@@ -9,6 +9,7 @@ public class PlayerShipTransformManager : MonoBehaviour {
 	private AsteroidManager asteroidManager;
 	public MessageDisplayer messages;
 	public EntityID entityID;
+	public FPSPlayerInput fpsPlayerInput;
 
 	[Space(5f)]
 	[Header("Movement")]
@@ -16,7 +17,7 @@ public class PlayerShipTransformManager : MonoBehaviour {
 	public float rotationSpeed;
 	public float thrustForce;
 	private float _timeCount;
-	private bool _canMove = true;
+	public bool _canMove = false;
 
 	[Space(5f)]
 	[Header("Firing")]
@@ -35,19 +36,27 @@ public class PlayerShipTransformManager : MonoBehaviour {
 
 	void Update () {
 		if (_canMove) {
-			if (alwaysMove) {
-				rb.AddForce(transform.forward * thrustForce);
-				if (GvrControllerInput.ClickButton || Input.touches.Length > 0) {
+			//if (TheGameManager.gameManager.vrActive) {
+				if (alwaysMove) {
+					rb.AddForce(transform.forward * thrustForce);
+					if (fpsPlayerInput.trigger) {
+						_isShooting = true;
+					} else {
+						_isShooting = false;
+					}
+				}
+				else {
+					if (fpsPlayerInput.trigger) {
+						if (!alwaysMove) rb.AddForce(transform.forward * thrustForce);
+					}
+				}
+			/*} else {
+				if (fpsPlayerInput) if (fpsPlayerInput.trigger) {
 					_isShooting = true;
 				} else {
 					_isShooting = false;
 				}
-			}
-			else {
-				if (GvrControllerInput.ClickButton || Input.touches.Length > 0) {
-					if (!alwaysMove) rb.AddForce(transform.forward * thrustForce);
-				}
-			}
+			}*/
 
 			if (_isShooting) {
 				if (Time.time > _fireTimeCounter) {
@@ -90,5 +99,32 @@ public class PlayerShipTransformManager : MonoBehaviour {
 	IEnumerator WaitForAsteroids (float t) {
 		yield return new WaitForSeconds(t);
 		_warmUp = true;
+	}
+
+	public void PlayerGetsIn (FPSPlayerInput pi) {
+		fpsPlayerInput = pi;
+		playerTransform = pi.transform;
+		StartUpSequence();
+	}
+	public void PlayerGetsOut () {
+		_canMove = false;
+		fpsPlayerInput = null;
+		playerTransform = null;
+		rb.isKinematic = true;
+	}
+
+	public void StartUpSequence () {
+		StartCoroutine(StartUpCountdown(5f));
+	}
+	public void StopShipSequence () {
+		StartCoroutine(StopShipCountdown(2f));
+	}
+	IEnumerator StartUpCountdown (float t) {
+		yield return new WaitForSeconds(t);
+		_canMove = true;
+		rb.isKinematic = false;
+	}
+	IEnumerator StopShipCountdown (float t) {
+		yield return new WaitForSeconds(t);
 	}
 }

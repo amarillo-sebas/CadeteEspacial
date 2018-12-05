@@ -68,8 +68,19 @@ public class GvrReticlePointer : GvrBasePointer {
 
   public override float MaxPointerDistance { get { return maxReticleDistance; } }
 
+  //amarillo
+  public bool pointerLooking = false;
+  public Transform objectLookingAt;
+  public bool triggerPressed = false;
+
   public override void OnPointerEnter(RaycastResult raycastResultResult, bool isInteractive) {
-    SetPointerTarget(raycastResultResult.worldPosition, isInteractive);
+    //SetPointerTarget(raycastResultResult.worldPosition, isInteractive);
+
+    //amarillo
+    if (SetPointerTarget(raycastResultResult.worldPosition, isInteractive) && isInteractive) {
+      pointerLooking = true;
+      objectLookingAt = raycastResultResult.gameObject.transform;
+    }
   }
 
   public override void OnPointerHover(RaycastResult raycastResultResult, bool isInteractive) {
@@ -80,11 +91,21 @@ public class GvrReticlePointer : GvrBasePointer {
     ReticleDistanceInMeters = maxReticleDistance;
     ReticleInnerAngle = RETICLE_MIN_INNER_ANGLE;
     ReticleOuterAngle = RETICLE_MIN_OUTER_ANGLE;
+
+    //amarillo
+    pointerLooking = false;
+    objectLookingAt = null;
   }
 
-  public override void OnPointerClickDown() {}
+  public override void OnPointerClickDown() {
+    //amarillo
+    triggerPressed = true;
+  }
 
-  public override void OnPointerClickUp() {}
+  public override void OnPointerClickUp() {
+    //amarillo
+    triggerPressed = false;
+  }
 
   public override void GetPointerRadius(out float enterRadius, out float exitRadius) {
     float min_inner_angle_radians = Mathf.Deg2Rad * RETICLE_MIN_INNER_ANGLE;
