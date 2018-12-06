@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR;
+using UnityEngine.SceneManagement;
 
 public class TheGameManager : MonoBehaviour {
 	public static TheGameManager gameManager = null;
@@ -28,10 +29,24 @@ public class TheGameManager : MonoBehaviour {
 		if (gameManager == null) {
 			DontDestroyOnLoad(gameObject);
 			gameManager = this;
-			InitLevel();
 		} else if (gameManager != this) {
 			Destroy(gameObject);
 		}
+	}
+
+	void OnEnable () {
+		SceneManager.sceneLoaded += OnSceneLoaded;
+	}
+	void OnDisable () {
+		SceneManager.sceneLoaded -= OnSceneLoaded;
+	}
+
+	void Start () {
+		ToggleVR(vrActive);
+	}
+
+	void OnSceneLoaded (Scene scene, LoadSceneMode mode) {
+		InitLevel();
 	}
 
 	void InitLevel () {
@@ -39,9 +54,11 @@ public class TheGameManager : MonoBehaviour {
 		if (g) {
 			_playerSpawn = g.transform;
 			_player = Instantiate(playerPrefab, _playerSpawn.position, _playerSpawn.rotation).transform;
+			if (SceneManager.GetActiveScene().name != "BaseMenu") _player.GetComponent<Pure_FPP_Controller>().GetInShip();
 		}
 
-		ToggleVR(vrActive);
+		npcManager = FindObjectOfType(typeof(NPCManager)) as NPCManager;
+		asteroidManager = FindObjectOfType(typeof(AsteroidManager)) as AsteroidManager;
 	}
 	
 	public void ToggleVR (bool b) {
@@ -49,5 +66,9 @@ public class TheGameManager : MonoBehaviour {
 		XRSettings.enabled = vrActive;
 		if (_fpsPlayerInput) _fpsPlayerInput.ToggleVR(b);
 		toggleGVR.ToggleVR(b);
+	}
+
+	public void LoadLevel (string s) {
+		SceneManager.LoadScene(s);
 	}
 }

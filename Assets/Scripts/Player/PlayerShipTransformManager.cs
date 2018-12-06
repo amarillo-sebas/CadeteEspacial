@@ -36,27 +36,19 @@ public class PlayerShipTransformManager : MonoBehaviour {
 
 	void Update () {
 		if (_canMove) {
-			//if (TheGameManager.gameManager.vrActive) {
-				if (alwaysMove) {
-					rb.AddForce(transform.forward * thrustForce);
-					if (fpsPlayerInput.trigger) {
-						_isShooting = true;
-					} else {
-						_isShooting = false;
-					}
-				}
-				else {
-					if (fpsPlayerInput.trigger) {
-						if (!alwaysMove) rb.AddForce(transform.forward * thrustForce);
-					}
-				}
-			/*} else {
-				if (fpsPlayerInput) if (fpsPlayerInput.trigger) {
+			if (alwaysMove) {
+				rb.AddForce(transform.forward * thrustForce);
+				if (fpsPlayerInput.trigger) {
 					_isShooting = true;
 				} else {
 					_isShooting = false;
 				}
-			}*/
+			}
+			else {
+				if (fpsPlayerInput.trigger) {
+					if (!alwaysMove) rb.AddForce(transform.forward * thrustForce);
+				}
+			}
 
 			if (_isShooting) {
 				if (Time.time > _fireTimeCounter) {
@@ -101,9 +93,9 @@ public class PlayerShipTransformManager : MonoBehaviour {
 		_warmUp = true;
 	}
 
-	public void PlayerGetsIn (FPSPlayerInput pi) {
+	public void PlayerGetsIn (FPSPlayerInput pi, Transform pt) {
 		fpsPlayerInput = pi;
-		playerTransform = pi.transform;
+		playerTransform = pt;
 		StartUpSequence();
 	}
 	public void PlayerGetsOut () {

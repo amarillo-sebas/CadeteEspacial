@@ -278,8 +278,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1603856499991838}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.0405}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.569}
+  m_LocalScale: {x: 15.082, y: 15.082, z: 15.082}
   m_Children:
   - {fileID: 4047021453735400}
   m_Father: {fileID: 4697913072956142}
@@ -688,6 +688,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shipTransform: {fileID: 0}
+  fpsInput: {fileID: 114617051088339126}
+  reticle: {fileID: 114942102522250412}
 --- !u!114 &114443497498776682
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -699,11 +701,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4363ee38a003df145a31685ab832b454, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Controller: {fileID: 143569720124372232}
   CharacterCamera: {fileID: 20018744038102562}
   Gravity: 5
   MoveSpeed: 2
   fpsPlayerInput: {fileID: 114617051088339126}
   accelerationValue: 0.0488
+  moving: 0
+  playerTransformManager: {fileID: 114339910622623774}
 --- !u!114 &114451401256786314
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -763,7 +768,7 @@ MonoBehaviour:
   playerCamera: {fileID: 114451401256786314}
   playerController: {fileID: 114443497498776682}
   playerTransformManager: {fileID: 114339910622623774}
-  pointer: {fileID: 114823774288974690}
+  playerReticle: {fileID: 114942102522250412}
   trigger: 0
 --- !u!114 &114653503415526480
 MonoBehaviour:
@@ -1084,10 +1089,13 @@ MonoBehaviour:
   cameraTransform: {fileID: 4697913072956142}
   playerDebug: {fileID: 114453784062176978}
   reticle: {fileID: 114888743369328374}
-  reticleDistance: 2
+  fpsPlayerInput: {fileID: 114617051088339126}
+  fpsController: {fileID: 114443497498776682}
+  reticleDistance: 5
   interactableLayers:
     serializedVersion: 2
-    m_Bits: 41984
+    m_Bits: 107520
+  gazing: 0
 --- !u!120 &120963018567809226
 LineRenderer:
   m_ObjectHideFlags: 1

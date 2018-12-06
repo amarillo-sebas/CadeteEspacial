@@ -7,6 +7,8 @@ public class PlayerReticle : MonoBehaviour {
 	public Transform cameraTransform;
 	public FPSPlayerDebug playerDebug;
 	public ReticleSkin reticle;
+	public FPSPlayerInput fpsPlayerInput;
+	public Pure_FPP_Controller fpsController;
 
 	[Space(5f)]
 	[Header("Variables")]
@@ -15,13 +17,24 @@ public class PlayerReticle : MonoBehaviour {
 
 	private bool lookingAtSomething = false;
 	private bool previousFrameLooking = false;
+	private bool triggerState = false;
+	private bool triggerBuffer = true;
+
+	private Interactable _tempGazeInteractable = null;
+	private Interactable _tempTriggerInteractable = null;
+	public bool gazing = false;
 	
 	void Update () {
 		RaycastHit hit;
-		if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, reticleDistance, interactableLayers)) {
-			lookingAtSomething = true;
-		} else {
-			lookingAtSomething = false;
+		Interactable interactable = null;
+
+		if (!fpsController.moving) {
+			if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, reticleDistance, interactableLayers)) {
+				lookingAtSomething = true;
+				interactable = hit.transform.GetComponent<Interactable>();
+			} else {
+				lookingAtSomething = false;
+			}
 		}
 
 
@@ -29,12 +42,46 @@ public class PlayerReticle : MonoBehaviour {
 			previousFrameLooking = lookingAtSomething;
 
 			if (lookingAtSomething) {
-				playerDebug.Log(hit.transform.name);
 				reticle.Gaze_In();
+				if (interactable) {
+					interactable.Gaze_In();
+					_tempGazeInteractable = interactable;
+					gazing = true;
+				}
 			} else {
-				playerDebug.Log("");
 				reticle.Gaze_Out();
+				if (_tempGazeInteractable) {
+					_tempGazeInteractable.Gaze_Out();
+					_tempGazeInteractable = null;
+					gazing = false;
+				}
 			}
 		}
+
+		if (fpsPlayerInput) {
+			if (fpsPlayerInput.trigger) {
+				if (interactable) interactable.Trigger_Hold();
+			} else playerDebug.Log("");
+		}
+	}
+
+	public void Trigger_Down () {
+		if (_tempGazeInteractable) {
+			_tempTriggerInteractable = _tempGazeInteractable;
+			_tempTriggerInteractable.Trigger_Down();
+		}
+	}
+	public void Trigger_Up () {
+		if (_tempTriggerInteractable) {
+			_tempTriggerInteractable.Trigger_Up();
+			_tempTriggerInteractable = null;
+		}
+	}
+
+	public void GetInShip () {
+		reticle.gameObject.SetActive(false);
+	}
+	public void LeaveShip () {
+		reticle.gameObject.SetActive(true);
 	}
 }

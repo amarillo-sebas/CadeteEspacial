@@ -8,7 +8,7 @@ public class Pure_FPP_Controller : MonoBehaviour {
 
 	[Space(10)]
 	[Tooltip("The Character Controller to operate EFPS. IT's required to work.")]
-	private CharacterController Controller; 
+	public CharacterController Controller; 
 	[Tooltip("FPS Camera's transform. Used at crouching height change.")]
 	public Camera CharacterCamera; // it's position is used. It shouldn't be moved by animations or other type of external transform movement.
 	[Tooltip("Gravity force power.")]
@@ -62,8 +62,11 @@ public class Pure_FPP_Controller : MonoBehaviour {
 	private bool _canCalculateAcceleration = true;
 	private bool _canCalculateDeceleration = false;
 
+	public bool moving = false;
+
+	public PlayerTransformManager playerTransformManager;
+
 	void Start() {
-		Controller = GetComponent<CharacterController> ();
 		if (CharacterCamera != null) {
 			CamPos = CharacterCamera.transform.localPosition;
 		}
@@ -71,16 +74,9 @@ public class Pure_FPP_Controller : MonoBehaviour {
 
 	private bool _justReleasedTrigger = false;
 	void FixedUpdate() {
-		if (!_insideShip && !fpsPlayerInput.pointer.pointerLooking) {
+		if (!_insideShip) {
 
-			if (fpsPlayerInput.trigger) {
-				if (!_justReleasedTrigger) {
-					_justReleasedTrigger = true;
-					_canCalculateAcceleration = true;
-					_canCalculateDeceleration = false;
-					accelerationFactor = 0f;
-				}
-
+			if (moving) {
 				if (_canCalculateAcceleration) {
 					accelerationFactor += Time.fixedDeltaTime + accelerationValue;
 					if (SineAccelerator.Accelerate(out acceleration, accelerationFactor)) {
@@ -99,13 +95,6 @@ public class Pure_FPP_Controller : MonoBehaviour {
 
 				TheVector = tV;
 			} else {
-				if (_justReleasedTrigger) {
-					_justReleasedTrigger = false;
-					_canCalculateAcceleration = false;
-					_canCalculateDeceleration = true;
-					accelerationFactor = 0f;
-				}
-
 				if (_canCalculateDeceleration) {
 					accelerationFactor += Time.fixedDeltaTime;
 					if (SineAccelerator.Decelerate(out acceleration, accelerationFactor)) {
@@ -116,13 +105,31 @@ public class Pure_FPP_Controller : MonoBehaviour {
 
 				TheVector = TheVector * acceleration;
 			}
-			
+
 			if (!Controller.isGrounded) {
 				TheVector.y = -Gravity * Time.fixedDeltaTime;
 			}
 
 			Controller.Move(TheVector);
-			//fpsPlayerInput.playerDebug.Log(TheVector.magnitude);
+		}
+	}
+
+	public void Trigger_Down () {
+		if (!fpsPlayerInput.playerReticle.gazing && !_insideShip) {
+			moving = true;
+			
+			_canCalculateAcceleration = true;
+			_canCalculateDeceleration = false;
+			accelerationFactor = 0f;
+		}
+	}
+	public void Trigger_Up () {
+		if (!_insideShip) {
+			moving = false;
+
+			_canCalculateAcceleration = false;
+			_canCalculateDeceleration = true;
+			accelerationFactor = 0f;
 		}
 	}
 
@@ -132,8 +139,12 @@ public class Pure_FPP_Controller : MonoBehaviour {
 
 	public void GetInShip () {
 		_insideShip = true;
+		Controller.enabled = false;
+		playerTransformManager.GetInShip();
 	}
 	public void LeaveShip () {
 		_insideShip = false;
+		Controller.enabled = true;
+		playerTransformManager.LeaveShip();
 	}
 }
