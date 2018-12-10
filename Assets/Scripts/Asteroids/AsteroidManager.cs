@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AsteroidManager : MonoBehaviour {
 	public VideoAudioManager playerMissionAudio;
+	public NPCManager npcManager;
 
 	public float levelSize;
 	public GameObject[] asteroidPrefabs;
@@ -17,6 +18,8 @@ public class AsteroidManager : MonoBehaviour {
 
 	public int asteroidsToGivePointer;
 	public float pointerTimeCount;
+
+	public List<int> asteroidsToSpawnEnemies = new List<int>();
 
 	void Start () {
 		_asteroidCounter = asteroidNumber * 9;
@@ -49,10 +52,19 @@ public class AsteroidManager : MonoBehaviour {
 		if (_asteroidCounter == fewAsteroids) playerMissionAudio.Mission_75();
 		if (_asteroidCounter == asteroidsToGivePointer) StartCoroutine(ActivatePointer());
 		if (asteroids.Count <= 0) playerMissionAudio.MissionEnd();
+
+		SpawnEnemies();
 	}
 
 	IEnumerator ActivatePointer () {
 		yield return new WaitForSeconds(pointerTimeCount);
 		if (asteroids.Count > 0) playerMissionAudio.ActivatePointer();
+	}
+
+	void SpawnEnemies () {
+		if (asteroidsToSpawnEnemies.Count > 0) if ((asteroidNumber * 9) - _asteroidCounter == asteroidsToSpawnEnemies[0]) {
+			npcManager.SpawnNPCs(EntityType.EnemyShip, 6);
+			asteroidsToSpawnEnemies.RemoveAt(0);
+		}
 	}
 }

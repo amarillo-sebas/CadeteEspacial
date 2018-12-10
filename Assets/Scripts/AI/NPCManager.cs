@@ -40,15 +40,15 @@ public class NPCManager : MonoBehaviour {
 
 		for (int i = 0; i < npcSpawns.childCount; i++) {
 			_npcSpawns.Add(npcSpawns.GetChild(i));
-			SpawnNPC(_npcSpawns[i]);
+			SpawnFriend(_npcSpawns[i]);
 		}
 		for (int j = 0; j < enemySpawns.childCount; j++) {
 			_enemySpawns.Add(enemySpawns.GetChild(j));
-			SpawnEnemy(_enemySpawns[j]);
+			//SpawnEnemy(_enemySpawns[j]);
 		}
 	}
 
-	void SpawnNPC (Transform t) {
+	void SpawnFriend (Transform t) {
 		int r = Random.Range(0, _npcsList.Count);
 		EntityType pilotName = _npcsList[r];
 		_npcsList.RemoveAt(r);
@@ -75,5 +75,13 @@ public class NPCManager : MonoBehaviour {
 	}
 	public void RemoveThisEnemy (EnemyShipTransformManager enemy) {
 		enemyShips.Remove(enemy);
+	}
+
+	public void SpawnNPCs (EntityType type, int amount) {
+		switch (type) {
+			case EntityType.EnemyShip:
+				SpawnEnemy(_enemySpawns[Random.Range(0, _enemySpawns.Count)]);
+			break;
+		}
 	}
 }

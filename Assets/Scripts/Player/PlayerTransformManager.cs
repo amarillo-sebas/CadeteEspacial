@@ -15,19 +15,17 @@ public class PlayerTransformManager : MonoBehaviour {
 		//shipTransform = _ship.transform;
 	}
 
-	public void GetInShip () {
-		if (!_ship) _ship = FindObjectOfType(typeof(PlayerShipTransformManager)) as PlayerShipTransformManager;
-		shipTransform = _ship.transform;
-		_ship.PlayerGetsIn(fpsInput, transform.GetChild(0));
+	public void GetInShip (Transform ship) {
+		//fix rotation issues
+		transform.rotation = ship.parent.rotation;
+		shipTransform = ship;
 		_insideShip = true;
 		reticle.GetInShip();
 	}
-	public void GetInShip (Transform ship) {
-		
-	}
+
 	public void LeaveShip () {
 		shipTransform = null;
-		_ship.PlayerGetsOut();
+		//_ship.PlayerGetsOut();
 		_insideShip = false;
 		reticle.LeaveShip();
 	}

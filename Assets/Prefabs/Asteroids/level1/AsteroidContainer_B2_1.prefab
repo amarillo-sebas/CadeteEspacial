@@ -127,7 +127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7635629501044184084d97f5ac5dae43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 30
+  hp: 40
   initialTorque: 0
   initialForce: 0
   size: 0.5

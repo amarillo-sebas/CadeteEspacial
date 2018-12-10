@@ -5,16 +5,22 @@ ModelImporter:
   fileIDToRecycleName:
     100000: //RootNode
     100002: PlayerShip_Window
+    100004: PlayerShip_Window_Out
     400000: //RootNode
     400002: PlayerShip_Window
+    400004: PlayerShip_Window_Out
     2100000: No Name
     2300000: //RootNode
     2300002: PlayerShip_Window
+    2300004: PlayerShip_Window_Out
     3300000: //RootNode
     3300002: PlayerShip_Window
+    3300004: PlayerShip_Window_Out
     4300000: Box001
     4300002: PlayerShip
     4300004: PlayerShip_Window
+    4300006: PlayerShip_00
+    4300008: PlayerShip_Window_Out
   externalObjects: {}
   materials:
     importMaterials: 1

@@ -11,6 +11,7 @@ public class FPSPlayerInput : MonoBehaviour {
 
 	[Space(5f)]
 	[Header("Variables")]
+	public bool emulate = true;
 	public bool trigger = false;
 
 	Vector2 touchDirection;
@@ -71,12 +72,9 @@ public class FPSPlayerInput : MonoBehaviour {
 			} else trigger = false;
 		}
 
-		if (Input.GetKeyDown(KeyCode.V)) {
-			trigger = true;
-		}
-		if (Input.GetKeyUp(KeyCode.V)) {
-			trigger = false;
-		}
+		#if UNITY_EDITOR
+		Emulation();
+		#endif
 
 		if (trigger != triggerBuffer) {
 			triggerBuffer = trigger;
@@ -94,5 +92,21 @@ public class FPSPlayerInput : MonoBehaviour {
 	public void ToggleVR (bool b) {
 		playerCamera.ToggleVR(b);
 		playerController.ToggleVR(b);
+	}
+
+	void Emulation () {
+		if (emulate) {
+			if (Input.GetKeyDown(KeyCode.Space)) {
+				trigger = true;
+			}
+			if (Input.GetKeyUp(KeyCode.Space)) {
+				trigger = false;
+			}
+
+			float ex = Input.GetAxis("Horizontal");
+			float ey = Input.GetAxis("Vertical");
+			Vector2 emulatedVector = new Vector2 (ex, ey);
+			playerCamera.GetLookVector(emulatedVector);
+		}
 	}
 }

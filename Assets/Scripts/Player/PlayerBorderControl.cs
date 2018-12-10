@@ -9,7 +9,7 @@ public class PlayerBorderControl : MonoBehaviour {
 	void OnCollisionEnter(Collision c) {
 		if (c.gameObject.tag == "LevelBorder") {
 			if (!_counting) {
-				borderFX.Darkness = 50f;
+				if (borderFX != null) borderFX.Darkness = 50f;
 				messages.Message("OE TE TÁS YENDO\nMUY LEJOS PES\nCADETE REGRESA", 2f);
 			}
 			
@@ -17,7 +17,7 @@ public class PlayerBorderControl : MonoBehaviour {
 	}
 	void OnCollisionExit(Collision c) {
 		if (c.gameObject.tag == "LevelBorder") {
-			borderFX.Darkness = 0f;
+			if (borderFX != null) borderFX.Darkness = 0f;
 			StartCoroutine(ClearMessage(2f));
 		}
 	}
@@ -28,5 +28,12 @@ public class PlayerBorderControl : MonoBehaviour {
 		messages.ClearMessage();
 		yield return new WaitForSeconds(t);
 		_counting = false;
+	}
+
+	public void PlayerGetsIn (Transform p) {
+		borderFX = p.GetComponentInChildren<Colorful.FastVignette>();
+	}
+	public void PlayerGetsOut () {
+		borderFX = null;
 	}
 }

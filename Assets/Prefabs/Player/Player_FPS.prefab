@@ -100,7 +100,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1562794063979716
 GameObject:
   m_ObjectHideFlags: 1
@@ -165,6 +165,7 @@ GameObject:
   - component: {fileID: 114617051088339126}
   - component: {fileID: 114339910622623774}
   - component: {fileID: 114942102522250412}
+  - component: {fileID: 114301007451988708}
   m_Layer: 10
   m_Name: Player_FPS
   m_TagString: Untagged
@@ -654,6 +655,21 @@ MonoBehaviour:
   Shader2D: {fileID: 4800000, guid: b5b3d4fe7139a7141be9b1475ea1127f, type: 3}
   Shader3D: {fileID: 4800000, guid: c356d31be0868c94d8c3eb943516cb8a, type: 3}
   Filter: 3
+--- !u!114 &114301007451988708
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1638775834478324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d040ad59cb2799e4e8b67725aa9ea99c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reticle: {fileID: 114942102522250412}
+  fpsController: {fileID: 114443497498776682}
+  transformManager: {fileID: 114339910622623774}
+  player: {fileID: 4697913072956142}
 --- !u!114 &114301553008093824
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -761,7 +777,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1638775834478324}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7478e89d84e19124badd4f18355b7a08, type: 3}
+  m_Script: {fileID: 11500000, guid: f305c53e699558949a2273785a871efb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerDebug: {fileID: 114453784062176978}
@@ -769,6 +785,7 @@ MonoBehaviour:
   playerController: {fileID: 114443497498776682}
   playerTransformManager: {fileID: 114339910622623774}
   playerReticle: {fileID: 114942102522250412}
+  emulate: 1
   trigger: 0
 --- !u!114 &114653503415526480
 MonoBehaviour:
@@ -1086,15 +1103,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71a4898c1db0211419120ddfdb14271a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 114301007451988708}
   cameraTransform: {fileID: 4697913072956142}
   playerDebug: {fileID: 114453784062176978}
   reticle: {fileID: 114888743369328374}
   fpsPlayerInput: {fileID: 114617051088339126}
   fpsController: {fileID: 114443497498776682}
+  transformManager: {fileID: 0}
   reticleDistance: 5
   interactableLayers:
     serializedVersion: 2
-    m_Bits: 107520
+    m_Bits: 65536
   gazing: 0
 --- !u!120 &120963018567809226
 LineRenderer:

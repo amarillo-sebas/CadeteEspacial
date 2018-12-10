@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 114564007413471730}
   - component: {fileID: 82376036746189180}
   m_Layer: 11
-  m_Name: Shot
+  m_Name: Shot_Green
   m_TagString: Shot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -227,7 +227,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4097
   entityID: {fileID: 0}
-  speed: 30
+  speed: 40
   lifeSpan: 5
   collisionDistance: 2
   explosionForce: 30
@@ -247,6 +247,6 @@ MonoBehaviour:
   m_doNotOverwriteTemplateMaterialProperties: 0
   m_startPos: {x: 0, y: 0, z: 0}
   m_endPos: {x: 0, y: 0, z: 1}
-  m_lineColor: {r: 1, g: 0, b: 0.061194897, a: 1}
+  m_lineColor: {r: 0, g: 1, b: 0.13333344, a: 1}
   m_lineWidth: 0.2
   m_lightSaberFactor: 0.8

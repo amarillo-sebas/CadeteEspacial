@@ -54,7 +54,7 @@ public class TheGameManager : MonoBehaviour {
 		if (g) {
 			_playerSpawn = g.transform;
 			_player = Instantiate(playerPrefab, _playerSpawn.position, _playerSpawn.rotation).transform;
-			if (SceneManager.GetActiveScene().name != "BaseMenu") _player.GetComponent<Pure_FPP_Controller>().GetInShip();
+			//if (SceneManager.GetActiveScene().name != "BaseMenu") _player.GetComponent<Pure_FPP_Controller>().GetInShip();
 		}
 
 		npcManager = FindObjectOfType(typeof(NPCManager)) as NPCManager;

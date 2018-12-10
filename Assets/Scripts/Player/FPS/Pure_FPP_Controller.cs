@@ -140,11 +140,11 @@ public class Pure_FPP_Controller : MonoBehaviour {
 	public void GetInShip () {
 		_insideShip = true;
 		Controller.enabled = false;
-		playerTransformManager.GetInShip();
+		//playerTransformManager.GetInShip();
 	}
 	public void LeaveShip () {
 		_insideShip = false;
 		Controller.enabled = true;
-		playerTransformManager.LeaveShip();
+		//playerTransformManager.LeaveShip();
 	}
 }
