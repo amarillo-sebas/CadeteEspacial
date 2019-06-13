@@ -47,7 +47,7 @@ public class FPSPlayerInput : MonoBehaviour {
 							if (touch.fingerId == _directionTouch) {
 								touchDirection = touch.position - touchOrigin;
 								touchDirection = new Vector2(Mathf.Clamp(touchDirection.x, -300f, 300f) / 300f, Mathf.Clamp(touchDirection.y, -300f, 300f) / 300f);
-								playerCamera.GetLookVector(touchDirection);
+								playerCamera.SetLookVector(touchDirection);
 							}
 						break;
 						case TouchPhase.Ended:
@@ -106,7 +106,10 @@ public class FPSPlayerInput : MonoBehaviour {
 			float ex = Input.GetAxis("Horizontal");
 			float ey = Input.GetAxis("Vertical");
 			Vector2 emulatedVector = new Vector2 (ex, ey);
-			playerCamera.GetLookVector(emulatedVector);
+
+			if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow)) playerCamera.SetLookVector(emulatedVector);
+
+			if (Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.RightArrow) || Input.GetKeyUp(KeyCode.UpArrow) || Input.GetKeyUp(KeyCode.DownArrow)) playerCamera.StopRotation();
 		}
 	}
 }

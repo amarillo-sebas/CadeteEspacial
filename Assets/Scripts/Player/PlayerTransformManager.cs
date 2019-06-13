@@ -16,8 +16,8 @@ public class PlayerTransformManager : MonoBehaviour {
 	}
 
 	public void GetInShip (Transform ship) {
-		//fix rotation issues
-		transform.rotation = ship.parent.rotation;
+		transform.rotation = ship.rotation;
+		GetComponentInChildren<Pure_FPP_Camera>().LookAtThis(transform.rotation);
 		shipTransform = ship;
 		_insideShip = true;
 		reticle.GetInShip();
@@ -31,6 +31,10 @@ public class PlayerTransformManager : MonoBehaviour {
 	}
 
 	void Update () {
-		if (shipTransform && _insideShip) transform.position = shipTransform.position;
+		if (shipTransform && _insideShip) transform.position = shipTransform.position;//why am I not parenting the player to the ship?
+	}
+
+	public void MakePlayerForceLookAt (Quaternion r) {
+		GetComponentInChildren<Pure_FPP_Camera>().ForceLookAt(r);
 	}
 }

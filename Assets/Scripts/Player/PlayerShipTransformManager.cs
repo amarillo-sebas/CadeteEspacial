@@ -17,12 +17,15 @@ public class PlayerShipTransformManager : MonoBehaviour {
 	public float rotationSpeed;
 	public float thrustForce;
 	private float _timeCount;
-	public bool _canMove = false;
+	public bool canMove = false;
+	//public bool isLanded = true;
+	public Transform landingPivot;
+	public Transform shipExit;
 
 	[Space(5f)]
 	[Header("Firing")]
-	private bool _isShooting;
 	public float fireRate;
+	private bool _isShooting;
 	private float _fireTimeCounter = 0f;
 	public Transform[] shotEmitters;
 	public GameObject shotPrefab;
@@ -35,7 +38,7 @@ public class PlayerShipTransformManager : MonoBehaviour {
 	}
 
 	void Update () {
-		if (_canMove) {
+		if (canMove) {
 			if (alwaysMove) {
 				rb.AddForce(transform.forward * thrustForce);
 				if (fpsPlayerInput.trigger) {
@@ -60,7 +63,7 @@ public class PlayerShipTransformManager : MonoBehaviour {
 	}
 
 	void FixedUpdate () {
-		if (_canMove) {
+		if (canMove) {
 			float t = Quaternion.Angle(playerTransform.rotation, transform.rotation);
 			transform.rotation = Quaternion.RotateTowards(transform.rotation, playerTransform.rotation, Time.deltaTime * rotationSpeed * t);
 		}
@@ -80,7 +83,7 @@ public class PlayerShipTransformManager : MonoBehaviour {
 		if (_warmUp) {
 			if (c.tag == "Base") {
 				if (asteroidManager.asteroids.Count <= 0) {
-					_canMove = false;
+					canMove = false;
 					messages.TypeMessage("BIEN CUÑAO\nSALVASTE LA BASE");
 				}
 			}
@@ -99,7 +102,9 @@ public class PlayerShipTransformManager : MonoBehaviour {
 		StartUpSequence();
 	}
 	public void PlayerGetsOut () {
-		_canMove = false;
+		playerTransform.parent.position = shipExit.position;
+		//playerTransform.parent.GetComponent<PlayerTransformManager>().MakePlayerForceLookAt(shipExit.rotation);
+		canMove = false;
 		fpsPlayerInput = null;
 		playerTransform = null;
 		rb.isKinematic = true;
@@ -113,10 +118,14 @@ public class PlayerShipTransformManager : MonoBehaviour {
 	}
 	IEnumerator StartUpCountdown (float t) {
 		yield return new WaitForSeconds(t);
-		_canMove = true;
+		canMove = true;
 		rb.isKinematic = false;
+		//yield return new WaitForSeconds(5f);
+		//isLanded = false;
 	}
 	IEnumerator StopShipCountdown (float t) {
+		canMove = false;
+		rb.isKinematic = true;
 		yield return new WaitForSeconds(t);
 	}
 }

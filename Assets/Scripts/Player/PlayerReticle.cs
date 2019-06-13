@@ -84,5 +84,6 @@ public class PlayerReticle : MonoBehaviour {
 	}
 	public void LeaveShip () {
 		reticle.gameObject.SetActive(true);
+		reticle.Gaze_Out();
 	}
 }

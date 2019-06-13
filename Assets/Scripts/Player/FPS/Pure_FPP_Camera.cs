@@ -22,6 +22,8 @@ public class Pure_FPP_Camera : MonoBehaviour {
 
 	public FPSPlayerDebug playerDebug;
 
+	public bool takeControlAway = false;
+
 	void OnEnable () {
 		_desiredRotationY = horizontalTransform.eulerAngles.y;
 		_desiredRotationX = verticalTransform.eulerAngles.x;
@@ -29,12 +31,13 @@ public class Pure_FPP_Camera : MonoBehaviour {
 
 	void Update () {
 		if (!TheGameManager.gameManager.vrActive) {
-			if (_rotateCamera) {
-				_desiredRotationY += rotationSpeed * _lookVector.x * Time.deltaTime;
-				_desiredRotationX += rotationSpeed * -_lookVector.y * Time.deltaTime;
+			if (!takeControlAway) {
+				if (_rotateCamera) {
+					_desiredRotationY += rotationSpeed * _lookVector.x * Time.deltaTime;
+					_desiredRotationX += rotationSpeed * -_lookVector.y * Time.deltaTime;
 
-				_desiredRotationX = Mathf.Clamp(_desiredRotationX, MinVerticalAngle, MaxVerticalAngle);
-			}
+					_desiredRotationX = Mathf.Clamp(_desiredRotationX, MinVerticalAngle, MaxVerticalAngle);
+				}
 
 				Quaternion rotY = Quaternion.Euler(horizontalTransform.eulerAngles.x, _desiredRotationY, horizontalTransform.eulerAngles.z);
 				Quaternion rotX = Quaternion.Euler(_desiredRotationX, horizontalTransform.eulerAngles.y, horizontalTransform.eulerAngles.z);
@@ -44,17 +47,18 @@ public class Pure_FPP_Camera : MonoBehaviour {
 
 				horizontalTransform.rotation = rotY;
 				verticalTransform.rotation = rotX;
-			//}
+			}
 		}
 	}
 
-	public void GetLookVector (Vector2 v) {
+	public void SetLookVector (Vector2 v) {
 		_lookVector = v;
 		_rotateCamera = true;
 
 	}
 	public void StopRotation () {
 		_rotateCamera = false;
+
 	}
 
 	public void ToggleVR (bool b) {
@@ -62,5 +66,23 @@ public class Pure_FPP_Camera : MonoBehaviour {
 			_desiredRotationY = horizontalTransform.eulerAngles.y;
 			_desiredRotationX = verticalTransform.eulerAngles.x;
 		}
+	}
+
+	public void ResetRotation () {
+		_desiredRotationY = 0f;
+		_desiredRotationX = 0f;
+	}
+
+	public void LookAtThis (Quaternion r) {
+		ResetRotation();
+		_desiredRotationY = r.eulerAngles.y;
+		_desiredRotationX = r.eulerAngles.x;
+	}
+
+	public void ForceLookAt (Quaternion r) {
+		Quaternion forcedRotationY = Quaternion.Euler(horizontalTransform.eulerAngles.x, r.eulerAngles.y, horizontalTransform.eulerAngles.z);
+		Quaternion forcedRotationX = Quaternion.Euler(r.eulerAngles.x, horizontalTransform.eulerAngles.y, horizontalTransform.eulerAngles.z);
+		horizontalTransform.rotation = forcedRotationY;
+		verticalTransform.rotation = forcedRotationX;
 	}
 }
