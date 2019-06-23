@@ -168,7 +168,7 @@ GameObject:
   - component: {fileID: 114301007451988708}
   m_Layer: 10
   m_Name: Player_FPS
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -743,6 +743,7 @@ MonoBehaviour:
   rotationSpeed: 100
   rotationDamping: 25
   playerDebug: {fileID: 114453784062176978}
+  takeControlAway: 0
 --- !u!114 &114453784062176978
 MonoBehaviour:
   m_ObjectHideFlags: 1

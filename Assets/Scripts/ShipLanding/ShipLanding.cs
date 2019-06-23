@@ -44,7 +44,6 @@ public class ShipLanding : MonoBehaviour {
 	
 	void OnTriggerEnter (Collider c) {
 		if (c.tag == "Player") {
-			Debug.Log("player entered");
 			playerShip = c.GetComponent<PlayerShipTransformManager>();
 			if (playerShip.canMove) {
 				playerShip.StopShipSequence();
