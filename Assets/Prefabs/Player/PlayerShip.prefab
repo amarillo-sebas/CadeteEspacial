@@ -1557,7 +1557,7 @@ MonoBehaviour:
   damage: 10
   shotLayers:
     serializedVersion: 2
-    m_Bits: 45057
+    m_Bits: 176129
 --- !u!114 &114319722831451518
 MonoBehaviour:
   m_ObjectHideFlags: 1

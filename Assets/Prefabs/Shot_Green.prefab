@@ -225,7 +225,7 @@ MonoBehaviour:
   damage: 0
   shotLayers:
     serializedVersion: 2
-    m_Bits: 4097
+    m_Bits: 135169
   entityID: {fileID: 0}
   speed: 40
   lifeSpan: 5
